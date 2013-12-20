@@ -1,0 +1,4 @@
+INDEX VERSION 1.126+C:\Users\Y.Okano\Desktop\AndroidDevelop\WorkSpace\alarm\.metadata\.plugins\org.eclipse.jdt.core
+3119708139.index
+2947628064.index
+2671017531.index
