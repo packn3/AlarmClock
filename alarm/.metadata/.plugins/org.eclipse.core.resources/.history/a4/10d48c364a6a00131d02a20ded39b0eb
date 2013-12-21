@@ -53,7 +53,6 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
     
      private int cal_hour;
      private int cal_minute;
-     private int cal_day;
      
      private WakeLock wakelock;
      private KeyguardLock keylock;
@@ -123,29 +122,21 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
          Log.d("AlarmTestActivity", "startAlarm()");
         
          alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-         //Calendarのインスタンスを作成
+         // 念のため現在の年月日と取得している時刻をカレンダーに設定 
          calendar = Calendar.getInstance();
+         calendar.setTimeInMillis(System.currentTimeMillis());
+         Date date = calendar.getTime();
+         date.setHours(cal_hour);
+         date.setMinutes(cal_minute);
+         calendar.setTimeInMillis(System.currentTimeMillis());
          
-         //現在の日付と時間を取得
-         int current_day = calendar.get(Calendar.DAY_OF_YEAR);
-         int current_hour = calendar.get(Calendar.HOUR_OF_DAY);
-         int current_minute = calendar.get(Calendar.MINUTE);
-         
-         //TimePickerで選択された時刻を取得 
+         // TimePicker で選択された時刻を取得 
          timePicker = (TimePicker)findViewById(R.id.timePicker1);
          cal_hour = timePicker.getCurrentHour();
          cal_minute = timePicker.getCurrentMinute();
-         cal_day = current_day;
-         
-         //もし設定された時間が過去の時間なら日付を明日にする
-         if(cal_hour < current_hour) cal_day++;
-         if(cal_hour == current_hour)
-        	 if(cal_minute <= current_minute) cal_day++;
-         
-         if(cal_day > 365) cal_day = 1;
-         
-         //取得した時刻をカレンダーに設定 
-         calendar.set(Calendar.DAY_OF_YEAR, cal_day);
+        
+          // 取得した時刻をカレンダーに設定 
+         calendar.set(Calendar.HOUR_OF_DAY, cal_hour);
          calendar.set(Calendar.MINUTE, cal_minute );
          calendar.set(Calendar.SECOND, 0);
          calendar.set(Calendar.MILLISECOND, 0);

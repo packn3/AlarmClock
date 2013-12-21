@@ -140,7 +140,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
          //‚à‚µİ’è‚³‚ê‚½ŠÔ‚ª‰ß‹‚ÌŠÔ‚È‚ç“ú•t‚ğ–¾“ú‚É‚·‚é
          if(cal_hour < current_hour) cal_day++;
          if(cal_hour == current_hour)
-        	 if(cal_minute <= current_minute) cal_day++;
+        	 if(cal_minute < current_minute) cal_day++;
          
          if(cal_day > 365) cal_day = 1;
          
