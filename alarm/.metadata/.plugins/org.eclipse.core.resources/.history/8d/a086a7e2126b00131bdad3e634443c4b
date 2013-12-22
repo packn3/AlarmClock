@@ -9,7 +9,7 @@
     tools:context=".Alarm" >
 
     <TextView
-        android:id="@+id/formulaText"
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -19,22 +19,22 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/answer"
+        android:id="@+id/editText1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/formulaText"
+        android:layout_below="@+id/textView1"
         android:layout_marginTop="60dp"
         android:ems="10"
         android:inputType="number" />
 
     <Button
-        android:id="@+id/judgeButton"
+        android:id="@+id/button1"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/answer"
-        android:layout_alignBottom="@+id/answer"
+        android:layout_alignBaseline="@+id/editText1"
+        android:layout_alignBottom="@+id/editText1"
         android:layout_alignParentRight="true"
         android:text="Button" />
 

@@ -20,13 +20,13 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/judgeButton"
-        android:layout_alignBottom="@+id/judgeButton"
+        android:layout_alignBaseline="@+id/button1"
+        android:layout_alignBottom="@+id/button1"
         android:layout_alignRight="@+id/timePicker1"
         android:text="OFF" />
 
     <Button
-        android:id="@+id/judgeButton"
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/timePicker1"
@@ -38,7 +38,7 @@
         android:id="@+id/callTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/judgeButton"
+        android:layout_alignLeft="@+id/button1"
         android:layout_below="@+id/button2"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="38dp"

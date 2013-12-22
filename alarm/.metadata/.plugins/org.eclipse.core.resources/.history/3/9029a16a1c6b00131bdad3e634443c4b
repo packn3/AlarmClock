@@ -57,12 +57,11 @@ public class Alarm extends Activity {
             	}
             }
 		});
-		
-		mp = MediaPlayer.create(this, R.raw.rakuen);
+		mp = MediaPlayer.create(this, R.raw.gyoza);
 		mp.setLooping(true);
         mp.start();
         
-        //スリープ回復
+     // スリープ回復
         wakelock = ((PowerManager) getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
                     | PowerManager.ACQUIRE_CAUSES_WAKEUP
@@ -90,6 +89,6 @@ public class Alarm extends Activity {
 		String nums1 = String.valueOf(num1);
 		String nums2 = String.valueOf(num2);
 		
-		formula.setText(nums1 + " + " + nums2);
+		formula.setText(nums1 + " �~ " + nums2);
 	}
 }

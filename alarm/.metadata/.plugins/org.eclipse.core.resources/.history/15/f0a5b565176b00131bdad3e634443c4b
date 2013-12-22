@@ -11,15 +11,13 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.EditText;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
 import java.util.Random;
 
 public class Alarm extends Activity {
-	private Button judge;
+	private Button backButton;
 	private TextView formula;
-	private EditText ans;
 	
 	private MediaPlayer mp;
 	private AudioManager am;
@@ -44,32 +42,27 @@ public class Alarm extends Activity {
 		formula.setTextSize(50);
 		createFormula();
 		
-		ans = (EditText)findViewById(R.id.answer);
-		
-		judge = (Button)findViewById(R.id.judgeButton);
-		judge.setOnClickListener( new Button.OnClickListener() {
+		/*backButton = (Button)findViewById(R.id.Backbnt);
+		backButton.setOnClickListener( new Button.OnClickListener() {
             public void onClick(View arg0) {
-            	int ans_int = Integer.valueOf(ans.getText().toString());
-            	if(ans_int == num1 + num2){
-	            	mp.stop();
-	            	am.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(vol), 0);
-	            	finish();
-            	}
+            	mp.stop();
+            	am.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(vol), 0);
+            	finish();
             }
 		});
-		
-		mp = MediaPlayer.create(this, R.raw.rakuen);
+		*/
+		mp = MediaPlayer.create(this, R.raw.gyoza);
 		mp.setLooping(true);
         mp.start();
         
-        //繧ｹ繝ｪ繝ｼ繝怜屓蠕ｩ
+     // スリープ状態から復帰する
         wakelock = ((PowerManager) getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
                     | PowerManager.ACQUIRE_CAUSES_WAKEUP
                     | PowerManager.ON_AFTER_RELEASE, "disableLock");
             wakelock.acquire();
 
-        //繝ｭ繝�繧ｯ隗｣髯､
+        // スクリーンロックを解除する
         KeyguardManager keyguard = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
         keylock = keyguard.newKeyguardLock("disableLock");
         keylock.disableKeyguard();
@@ -90,6 +83,6 @@ public class Alarm extends Activity {
 		String nums1 = String.valueOf(num1);
 		String nums2 = String.valueOf(num2);
 		
-		formula.setText(nums1 + " + " + nums2);
+		formula.setText(nums1 + " × " + nums2);
 	}
 }

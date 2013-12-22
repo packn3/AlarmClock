@@ -1,4 +1,27 @@
 package com.example.alarm;
+/*
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+
+public class MainActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    
+}
+*/
 
 import java.util.Calendar;
 import java.util.Date;
@@ -45,6 +68,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
        
+          // Œ»İ‚Ìæ“¾ 
          calendar = Calendar.getInstance();
          calendar.setTimeInMillis(System.currentTimeMillis());
          Date date = calendar.getTime();
@@ -52,17 +76,18 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
          cal_minute = date.getMinutes();
          alarmEnable = false;
        
+         // •Û‘¶‚³‚ê‚½‚ÆƒAƒ‰[ƒ€‚ÌƒXƒe[ƒ^ƒX‚ğæ“¾ 
          prefs = PreferenceManager.getDefaultSharedPreferences(this);
          prefs.registerOnSharedPreferenceChangeListener(this);
          getSharedPreferences();
          
-         //
-         final Button alarmYesBtn = (Button)findViewById(R.id.judgeButton);
+         //ƒ{ƒ^ƒ“‚Ìì¬
+         final Button alarmYesBtn = (Button)findViewById(R.id.button1);
          alarmYesBtn.setEnabled(!alarmEnable);
          final Button alarmNo_Btn = (Button)findViewById(R.id.button2);
          alarmNo_Btn.setEnabled(alarmEnable);
          
-          // TimePicker ï¿½É”ï¿½ï¿½f 
+          // TimePicker ‚É”½‰f 
          timePicker = (TimePicker)findViewById(R.id.timePicker1);
          timePicker.setIs24HourView(true);
          timePicker.setCurrentHour(cal_hour);
@@ -72,12 +97,12 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
          
         alarmYesBtn.setOnClickListener( new Button.OnClickListener() {
                public void onClick(View arg0) {
-                    // TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½Eï¿½Xï¿½^ï¿½u 
+                    // TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu 
                     alarmYesBtn.setEnabled(false);
                     alarmNo_Btn.setEnabled(true);
                     timePicker.setEnabled(false);
                     
-                    // ï¿½Aï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ìİ’ï¿½ 
+                    // ƒAƒ‰[ƒ€‚Ìİ’è 
                     alarmEnable = true;
                     startAlarm();
                }
@@ -85,16 +110,28 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
        
         alarmNo_Btn.setOnClickListener( new Button.OnClickListener() {
                public void onClick(View v) {
-                    // TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½Eï¿½Xï¿½^ï¿½u 
+                    // TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu 
                     alarmYesBtn.setEnabled(true);
                     alarmNo_Btn.setEnabled(false);
                     timePicker.setEnabled(true);
                     
-                    // ï¿½Aï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½Ì‰ï¿½ï¿½ï¿½ 
+                    // ƒAƒ‰[ƒ€‚Ì‰ğœ 
                     alarmEnable = false;
                     stopAlarm();
                }
         });
+        
+ /*       // ƒXƒŠ[ƒvó‘Ô‚©‚ç•œ‹A‚·‚é
+        wakelock = ((PowerManager) getSystemService(Context.POWER_SERVICE))
+                .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
+                    | PowerManager.ACQUIRE_CAUSES_WAKEUP
+                    | PowerManager.ON_AFTER_RELEASE, "disableLock");
+            wakelock.acquire();
+
+        // ƒXƒNƒŠ[ƒ“ƒƒbƒN‚ğ‰ğœ‚·‚é
+        KeyguardManager keyguard = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+        keylock = keyguard.newKeyguardLock("disableLock");
+        keylock.disableKeyguard();*/
     }
     
     @Override
@@ -117,15 +154,15 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
          Log.d("AlarmTestActivity", "startAlarm()");
         
          alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-         //Calendarã®ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹ã‚’ä½œæˆ
+         //Calendar‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğì¬
          calendar = Calendar.getInstance();
          
-         //ç¾åœ¨ã®æ—¥ä»˜ã¨æ™‚é–“ã‚’å–å¾—
+         //Œ»İ‚Ì“ú•t‚ÆŠÔ‚ğæ“¾
          int current_day = calendar.get(Calendar.DAY_OF_YEAR);
          int current_hour = calendar.get(Calendar.HOUR_OF_DAY);
          int current_minute = calendar.get(Calendar.MINUTE);
          
-         //ãƒ‡ãƒãƒƒã‚°ç”¨**********************************************************
+         //ƒfƒoƒbƒO—p**********************************************************
          //TextView time = (TextView)findViewById(R.id.currentTime);
          //String day = String.valueOf(current_day);
          //String hour = String.valueOf(current_hour);
@@ -133,20 +170,20 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
          //time.setText("Current Time " + day + " : " + hour + " : " + minute);
          //*****************************************************************
          
-         //TimePickerã‹ã‚‰æ™‚é–“ã‚’å–å¾—
+         //TimePicker‚Å‘I‘ğ‚³‚ê‚½‚ğæ“¾ 
          timePicker = (TimePicker)findViewById(R.id.timePicker1);
          cal_hour = timePicker.getCurrentHour();
          cal_minute = timePicker.getCurrentMinute();
          cal_day = current_day;
          
-         //æ™‚é–“ã‚’è¶…ãˆã¦ã„ãŸã‚‰ç¿Œæ—¥ã«è¨­å®š
+         //‚à‚µİ’è‚³‚ê‚½ŠÔ‚ª‰ß‹‚ÌŠÔ‚È‚ç“ú•t‚ğ–¾“ú‚É‚·‚é
          if(cal_hour < current_hour){
         	 cal_day++;
          } else if(cal_hour == current_hour){
         	 if(cal_minute <= current_minute) cal_day++;
          }
          
-         //ã†ã‚‹ã†å¹´ã®å‡¦ç†
+         //‚¤‚é‚¤”N‚ÌŒvZ
          int year = calendar.get(Calendar.YEAR);
          if(( year % 4 ) == 0 && ( year % 100 ) != 0 || ( year % 400 ) == 0){
         	 if(cal_day > 366) cal_day = 1;
@@ -154,7 +191,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
         	 if(cal_day > 365) cal_day = 1;
          }
          
-         //ãƒ‡ãƒãƒƒã‚°ç”¨*************************************************
+         //ƒfƒoƒbƒO—p*************************************************
          TextView time = (TextView)findViewById(R.id.callTime);
          String day = String.valueOf(cal_day);
          String hour = String.valueOf(cal_hour);
@@ -162,44 +199,44 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
          time.setText("Call Time " + day + " : " + hour + " : " + minute);
          //********************************************************
          
-         //ã‚«ãƒ¬ãƒ³ãƒ€ãƒ¼ã«è¨­å®š
+         //æ“¾‚µ‚½‚ğƒJƒŒƒ“ƒ_[‚Éİ’è 
          calendar.set(Calendar.DAY_OF_YEAR, cal_day);
          calendar.set(Calendar.MINUTE, cal_minute );
          calendar.set(Calendar.SECOND, 0);
          calendar.set(Calendar.MILLISECOND, 0);
         
-          // ã‚¢ãƒ©ãƒ¼ãƒ ã‚’
+          // ƒAƒ‰[ƒ€‚É“o˜^ 
          alarmManager.set(AlarmManager.RTC_WAKEUP,
                              calendar.getTimeInMillis(),
                              getPendingIntent());
          
-          //è¨­å®šã‚’ä¿å­˜
+          //ó‘Ô‚ğ•Û‘¶
          saveStatus();
     }
    
     public void stopAlarm() {
          Log.d("AlarmTestActivity", "stopAlarm()");
         
-         //
+          // “o˜^‚µ‚Ä‚ ‚éƒAƒ‰[ƒ€‚ğ‰ğœ 
          alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
          alarmManager.cancel(getPendingIntent());
     }
    
     private PendingIntent getPendingIntent() {
-         // ï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Aï¿½vï¿½ï¿½ï¿½Pï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½oï¿½^ 
-    	 //ï¿½ï¿½ï¿½ï¿½ï¿½Å‰ï¿½ï¿½ç‚©ï¿½ÌƒQï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é‚½ï¿½ß‚ï¿½Activityï¿½ï¿½İ’è‚·ï¿½ï¿½
+          // ‹N“®‚·‚éƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ğ“o˜^ 
+    	  //‚±‚±‚Å‰½‚ç‚©‚ÌƒQ[ƒ€‚ğ‚·‚é‚½‚ß‚ÌActivity‚ğİ’è‚·‚é
          Intent intent = new Intent( getApplicationContext(), Alarm.class );
          PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
           return pendingIntent;
     }
 
      public void onSharedPreferenceChanged(SharedPreferences arg0, String arg1) {
-          // TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½\ï¿½bï¿½hï¿½Eï¿½Xï¿½^ï¿½u 
+          // TODO ©“®¶¬‚³‚ê‚½ƒƒ\ƒbƒhEƒXƒ^ƒu 
           getSharedPreferences();
      }
     
     private void getSharedPreferences() {
-         // ï¿½Û‘ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ 
+          // •Û‘¶‚³‚ê‚Ä‚¢‚½‚ğæ“¾ 
     	 cal_day = prefs.getInt("cal_day", cal_day);
          cal_hour = prefs.getInt("cal_hour", cal_hour);
          cal_minute = prefs.getInt("cal_minute", cal_minute);

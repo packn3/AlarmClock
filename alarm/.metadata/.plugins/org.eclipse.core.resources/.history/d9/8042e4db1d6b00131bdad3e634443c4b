@@ -186,8 +186,8 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
     }
    
     private PendingIntent getPendingIntent() {
-         // �N������A�v���P�[�V������o�^ 
-    	 //�����ŉ��炩�̃Q�[�������邽�߂�Activity��ݒ肷��
+          // �N������A�v���P�[�V������o�^ 
+    	  //�����ŉ��炩�̃Q�[�������邽�߂�Activity��ݒ肷��
          Intent intent = new Intent( getApplicationContext(), Alarm.class );
          PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
           return pendingIntent;

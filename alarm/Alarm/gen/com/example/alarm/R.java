@@ -26,13 +26,13 @@ public final class R {
         public static final int wm1207_373558b=0x7f020002;
     }
     public static final class id {
-        public static final int Backbnt=0x7f090000;
         public static final int action_settings=0x7f090006;
-        public static final int button1=0x7f090004;
-        public static final int button2=0x7f090003;
+        public static final int answer=0x7f090001;
+        public static final int button2=0x7f090004;
         public static final int callTime=0x7f090005;
-        public static final int imageView1=0x7f090001;
-        public static final int timePicker1=0x7f090002;
+        public static final int formulaText=0x7f090000;
+        public static final int judgeButton=0x7f090002;
+        public static final int timePicker1=0x7f090003;
     }
     public static final class layout {
         public static final int activity_alarm=0x7f030000;
