@@ -9,40 +9,42 @@
     tools:context=".Alarm" >
 
     <TextView
-        android:id="@+id/formulaText"
+        android:id="@+id/questionNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="72dp"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <EditText
-        android:id="@+id/answer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/formulaText"
-        android:layout_marginTop="60dp"
-        android:ems="10"
-        android:inputType="number" />
 
     <Button
         android:id="@+id/judgeButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/answer"
-        android:layout_alignBottom="@+id/answer"
         android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/answer"
         android:text="Button" />
 
-    <TextView
-        android:id="@+id/questionNumber"
+    <EditText
+        android:id="@+id/answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/questionNumber"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="146dp"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/formulaText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/answer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="94dp"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 

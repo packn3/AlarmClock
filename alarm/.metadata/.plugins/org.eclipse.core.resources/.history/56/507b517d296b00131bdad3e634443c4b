@@ -3,7 +3,6 @@ package com.example.alarm;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.os.Vibrator;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
@@ -33,9 +32,6 @@ public class Alarm extends Activity {
     
     private int num1, num2;
     int questionNo;
-    final int MAX_QUESTION_NO = 3;
-    
-    Vibrator vib;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +58,8 @@ public class Alarm extends Activity {
 		judge = (Button)findViewById(R.id.judgeButton);
 		judge.setOnClickListener( new Button.OnClickListener() {
             public void onClick(View arg0) {
-            	if("".equals(ans.getText().toString())) return;
             	if(check(ans.getText().toString())){
-            		if(questionNo == MAX_QUESTION_NO){
+            		if(questionNo == 3){
             			mp.stop();
             			am.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(vol), 0);
             			finish();
@@ -74,7 +69,7 @@ public class Alarm extends Activity {
             			createFormula();
             		}
             	} else{
-            		wrongAnswer();
+            		createFormula();
             	}
             }
 		});
@@ -94,8 +89,6 @@ public class Alarm extends Activity {
         KeyguardManager keyguard = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
         keylock = keyguard.newKeyguardLock("disableLock");
         keylock.disableKeyguard();
-        
-        vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 	}
 
 	@Override
@@ -132,18 +125,12 @@ public class Alarm extends Activity {
 	private void createQuestionNoText(int q){
 		String no = String.valueOf(questionNo);
 		questionNoText.setText(no + "問目");
-		questionNoText.setTextSize(40);
+		questionNoText.setTextSize(60);
 	}
 	
 	private boolean check(String ans_string){
 		int ans_int = Integer.valueOf(ans_string);
 		if(ans_int == num1 + num2) return true;
 		else return false;
-	}
-	
-	private void wrongAnswer(){
-		createFormula();
-		long[] pattern = {0, 120, 50, 220};
-		vib.vibrate(pattern, -1);
 	}
 }

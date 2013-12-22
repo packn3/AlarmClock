@@ -209,18 +209,18 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
     
     private void calcDate(){
     	if(cal_hour < current_hour){
-    		cal_day++;
+       	 cal_day++;
         } else if(cal_hour == current_hour){
-        	if(cal_minute <= current_minute) cal_day++;
+       	 if(cal_minute <= current_minute) cal_day++;
         }
     }
     
     private void calcLeapYear(){
     	int year = calendar.get(Calendar.YEAR);
         if(( year % 4 ) == 0 && ( year % 100 ) != 0 || ( year % 400 ) == 0){
-        	if(cal_day > 366) cal_day = 1;
+       	 if(cal_day > 366) cal_day = 1;
         } else{
-        	if(cal_day > 365) cal_day = 1;
+       	 if(cal_day > 365) cal_day = 1;
         }
     }
 }

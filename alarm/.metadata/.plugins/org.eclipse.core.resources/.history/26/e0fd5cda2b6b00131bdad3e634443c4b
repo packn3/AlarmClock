@@ -33,7 +33,6 @@ public class Alarm extends Activity {
     
     private int num1, num2;
     int questionNo;
-    final int MAX_QUESTION_NO = 3;
     
     Vibrator vib;
     
@@ -64,7 +63,7 @@ public class Alarm extends Activity {
             public void onClick(View arg0) {
             	if("".equals(ans.getText().toString())) return;
             	if(check(ans.getText().toString())){
-            		if(questionNo == MAX_QUESTION_NO){
+            		if(questionNo == 3){
             			mp.stop();
             			am.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(vol), 0);
             			finish();
@@ -95,7 +94,7 @@ public class Alarm extends Activity {
         keylock = keyguard.newKeyguardLock("disableLock");
         keylock.disableKeyguard();
         
-        vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+        Vibrator vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
 	}
 
 	@Override
@@ -143,7 +142,7 @@ public class Alarm extends Activity {
 	
 	private void wrongAnswer(){
 		createFormula();
-		long[] pattern = {0, 120, 50, 220};
-		vib.vibrate(pattern, -1);
+		long[] pattern = {0, 60, 10, 60};
+		vib.vibrate(60);
 	}
 }
