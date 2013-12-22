@@ -1,7 +1,12 @@
 package com.example.alarm;
 
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.app.Activity;
+import android.app.KeyguardManager;
+import android.app.KeyguardManager.KeyguardLock;
+import android.content.Context;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +18,10 @@ public class Alarm extends Activity {
 	public MediaPlayer mp;
 	private AudioManager am;
 	public int vol;
+	
+	private WakeLock wakelock;
+    private KeyguardLock keylock;
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,6 +44,18 @@ public class Alarm extends Activity {
 		mp = MediaPlayer.create(this, R.raw.gyoza);
 		mp.setLooping(true);
         mp.start();
+        
+     // スリープ状態から復帰する
+        wakelock = ((PowerManager) getSystemService(Context.POWER_SERVICE))
+                .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
+                    | PowerManager.ACQUIRE_CAUSES_WAKEUP
+                    | PowerManager.ON_AFTER_RELEASE, "disableLock");
+            wakelock.acquire();
+
+        // スクリーンロックを解除する
+        KeyguardManager keyguard = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+        keylock = keyguard.newKeyguardLock("disableLock");
+        keylock.disableKeyguard();
 	}
 
 	@Override

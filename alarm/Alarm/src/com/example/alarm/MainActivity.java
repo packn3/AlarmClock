@@ -36,8 +36,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.TimePicker;
+import android.widget.TextView;
 import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
 import android.os.PowerManager;
@@ -57,6 +59,8 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
      
      private WakeLock wakelock;
      private KeyguardLock keylock;
+     
+     private boolean alarmEnable;
     
     /** Called when the activity is first created. */
     @Override
@@ -70,20 +74,25 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
          Date date = calendar.getTime();
          cal_hour = date.getHours();
          cal_minute = date.getMinutes();
+         alarmEnable = false;
        
-        final Button alarmYesBtn = (Button)findViewById(R.id.button1);
-        final Button alarmNo_Btn = (Button)findViewById(R.id.button2);
-       
-          // 保存された時刻を取得 
-          prefs = PreferenceManager.getDefaultSharedPreferences(this);
-          prefs.registerOnSharedPreferenceChangeListener(this);
-          getSharedPreferences();
+         // 保存された時刻とアラームのステータスを取得 
+         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+         prefs.registerOnSharedPreferenceChangeListener(this);
+         getSharedPreferences();
+         
+         //ボタンの作成
+         final Button alarmYesBtn = (Button)findViewById(R.id.button1);
+         alarmYesBtn.setEnabled(!alarmEnable);
+         final Button alarmNo_Btn = (Button)findViewById(R.id.button2);
+         alarmNo_Btn.setEnabled(alarmEnable);
          
           // TimePicker に反映 
          timePicker = (TimePicker)findViewById(R.id.timePicker1);
          timePicker.setIs24HourView(true);
          timePicker.setCurrentHour(cal_hour);
          timePicker.setCurrentMinute(cal_minute);
+         timePicker.setEnabled(!alarmEnable);
          
          
         alarmYesBtn.setOnClickListener( new Button.OnClickListener() {
@@ -91,7 +100,10 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
                     // TODO 自動生成されたメソッド・スタブ 
                     alarmYesBtn.setEnabled(false);
                     alarmNo_Btn.setEnabled(true);
+                    timePicker.setEnabled(false);
+                    
                     // アラームの設定 
+                    alarmEnable = true;
                     startAlarm();
                }
         });
@@ -101,24 +113,43 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
                     // TODO 自動生成されたメソッド・スタブ 
                     alarmYesBtn.setEnabled(true);
                     alarmNo_Btn.setEnabled(false);
+                    timePicker.setEnabled(true);
+                    
                     // アラームの解除 
+                    alarmEnable = false;
                     stopAlarm();
                }
         });
         
-     // スリープ状態から復帰する
+ /*       // スリープ状態から復帰する
         wakelock = ((PowerManager) getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
                     | PowerManager.ACQUIRE_CAUSES_WAKEUP
                     | PowerManager.ON_AFTER_RELEASE, "disableLock");
             wakelock.acquire();
 
-            // スクリーンロックを解除する
-            KeyguardManager keyguard = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
-            keylock = keyguard.newKeyguardLock("disableLock");
-            keylock.disableKeyguard();
+        // スクリーンロックを解除する
+        KeyguardManager keyguard = (KeyguardManager) getSystemService(Context.KEYGUARD_SERVICE);
+        keylock = keyguard.newKeyguardLock("disableLock");
+        keylock.disableKeyguard();*/
     }
-   
+    
+    @Override
+	public void onUserLeaveHint(){
+		saveStatus();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch(keyCode){
+		case KeyEvent.KEYCODE_BACK:
+			saveStatus();
+			finish();
+			return true;
+		}
+		return false;
+	}
+	
     public void startAlarm() {
          Log.d("AlarmTestActivity", "startAlarm()");
         
@@ -131,6 +162,14 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
          int current_hour = calendar.get(Calendar.HOUR_OF_DAY);
          int current_minute = calendar.get(Calendar.MINUTE);
          
+         //デバッグ用**********************************************************
+         //TextView time = (TextView)findViewById(R.id.currentTime);
+         //String day = String.valueOf(current_day);
+         //String hour = String.valueOf(current_hour);
+         //String minute = String.valueOf(current_minute);
+         //time.setText("Current Time " + day + " : " + hour + " : " + minute);
+         //*****************************************************************
+         
          //TimePickerで選択された時刻を取得 
          timePicker = (TimePicker)findViewById(R.id.timePicker1);
          cal_hour = timePicker.getCurrentHour();
@@ -138,11 +177,27 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
          cal_day = current_day;
          
          //もし設定された時間が過去の時間なら日付を明日にする
-         if(cal_hour < current_hour) cal_day++;
-         if(cal_hour == current_hour)
+         if(cal_hour < current_hour){
+        	 cal_day++;
+         } else if(cal_hour == current_hour){
         	 if(cal_minute <= current_minute) cal_day++;
+         }
          
-         if(cal_day > 365) cal_day = 1;
+         //うるう年の計算
+         int year = calendar.get(Calendar.YEAR);
+         if(( year % 4 ) == 0 && ( year % 100 ) != 0 || ( year % 400 ) == 0){
+        	 if(cal_day > 366) cal_day = 1;
+         } else{
+        	 if(cal_day > 365) cal_day = 1;
+         }
+         
+         //デバッグ用*************************************************
+         TextView time = (TextView)findViewById(R.id.callTime);
+         String day = String.valueOf(cal_day);
+         String hour = String.valueOf(cal_hour);
+         String minute = String.valueOf(cal_minute);
+         time.setText("Call Time " + day + " : " + hour + " : " + minute);
+         //********************************************************
          
          //取得した時刻をカレンダーに設定 
          calendar.set(Calendar.DAY_OF_YEAR, cal_day);
@@ -155,11 +210,8 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
                              calendar.getTimeInMillis(),
                              getPendingIntent());
          
-          // 時刻を保存 
-         SharedPreferences.Editor editor = prefs.edit();
-         editor.putInt( "cal_hour", cal_hour );
-         editor.putInt( "cal_minute", cal_minute );
-         editor.commit();
+          //状態を保存
+         saveStatus();
     }
    
     public void stopAlarm() {
@@ -172,6 +224,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
    
     private PendingIntent getPendingIntent() {
           // 起動するアプリケーションを登録 
+    	  //ここで何らかのゲームをするためのActivityを設定する
          Intent intent = new Intent( getApplicationContext(), Alarm.class );
          PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
           return pendingIntent;
@@ -184,7 +237,18 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
     
     private void getSharedPreferences() {
           // 保存されていた時刻を取得 
+    	 cal_day = prefs.getInt("cal_day", cal_day);
          cal_hour = prefs.getInt("cal_hour", cal_hour);
          cal_minute = prefs.getInt("cal_minute", cal_minute);
+         alarmEnable = prefs.getBoolean("alarmEnable", alarmEnable);
+    }
+    
+    private void saveStatus(){
+    	SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt( "cal_day", cal_day);
+        editor.putInt( "cal_hour", cal_hour );
+        editor.putInt( "cal_minute", cal_minute );
+        editor.putBoolean( "alarmEnable", alarmEnable);
+        editor.commit();
     }
 }
