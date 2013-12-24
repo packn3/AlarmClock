@@ -62,14 +62,13 @@ public class Alarm extends Activity {
 		judge = (Button)findViewById(R.id.judgeButton);
 		judge.setOnClickListener( new Button.OnClickListener() {
             public void onClick(View arg0) {
-            	//空白の状態でボタンを押した場合は処理しない
             	if("".equals(ans.getText().toString())) return;
             	if(check(ans.getText().toString())){
             		if(questionNo == MAX_QUESTION_NO){
             			mp.stop();
             			am.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(vol), 0);
-            			wakelock.release(); //スリープ解除状態の解除
-            			keylock.reenableKeyguard(); //ロック解除状態の解除
+            			wakelock.release();
+            			keylock.reenableKeyguard();
             			finish();
             		} else{
             			questionNo++;
@@ -86,7 +85,6 @@ public class Alarm extends Activity {
 		mp.setLooping(true);
         mp.start();
         
-        //SystemService系の準備*******************************************************************
         //スリープ回復
         wakelock = ((PowerManager) getSystemService(Context.POWER_SERVICE))
                 .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK
@@ -100,11 +98,11 @@ public class Alarm extends Activity {
         keylock.disableKeyguard();
         
         vib = (Vibrator)getSystemService(VIBRATOR_SERVICE);
-        //***************************************************************************************
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.alarm, menu);
 		return true;
 	}
@@ -119,7 +117,6 @@ public class Alarm extends Activity {
 	    return super.dispatchKeyEvent(event);
 	}
 	
-	//計算式を作るメソッド
 	private void createFormula(){
 		Random ran = new Random();
 		num1 = ran.nextInt(50);
@@ -132,25 +129,21 @@ public class Alarm extends Activity {
 		ans.setText("");
 	}
 	
-	//問題番号を表示するメソッド
 	private void createQuestionNoText(int q){
 		String no = String.valueOf(questionNo);
 		questionNoText.setText(no + "問目");
 		questionNoText.setTextSize(40);
 	}
 	
-	//答えの判定をするメソッド
 	private boolean check(String ans_string){
 		int ans_int = Integer.valueOf(ans_string);
 		if(ans_int == num1 + num2) return true;
 		else return false;
 	}
 	
-	//答えが間違っていた時の処理をするメソッド
 	private void wrongAnswer(){
 		createFormula();
-		//バイブを鳴らして間違っていることを知らせる
-		long[] pattern = {0, 120, 50, 220}; //「ブッブー」のパターン
+		long[] pattern = {0, 120, 50, 220};
 		vib.vibrate(pattern, -1);
 	}
 }
