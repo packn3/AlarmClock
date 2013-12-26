@@ -7,5 +7,6 @@
     <string name="title_activity_alarm">Alarm</string>
     <string name="title_activity_button">Button</string>
     <string name="title_activity_button_game">ButtonGame</string>
+    <string name="title_activity_calculate_game">CalculateGame</string>
 
 </resources>

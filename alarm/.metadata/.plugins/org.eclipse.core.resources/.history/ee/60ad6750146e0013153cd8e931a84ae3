@@ -1,0 +1,85 @@
+package com.example.alarm;
+
+import android.media.AudioManager;
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.view.View;
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.view.View.OnClickListener;
+
+public class ButtonGame extends Activity implements OnClickListener{
+
+	final int num = 10;
+	Button[] bt;
+	int[] number;
+	int currentNumber;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        setContentView(ll);
+		
+//		int num = 10;//(int)(Math.random() * 10) + 1;
+//        int n = num;
+        
+       // TextView tv = new TextView(this);
+       // tv.setText("アラーム鳴動");
+       // ll.addView(tv);
+        number = new int[num];
+        for(int i=0; i<num; i++){
+        	number[i] = i+1;
+        }
+        shuffle(number);
+        
+        currentNumber = 1;
+
+        bt = new Button[num];
+        for(int i=0; i<num; i++)
+        {
+                bt[i] = new Button(this);
+                bt[i].setText("ボタン" + number[i]);
+                ll.addView(bt[i]);
+
+                bt[i].setOnClickListener(this);
+        }
+	}
+	
+	public void onClick(View v)
+    {
+		for(int i=0; i<num; i++){
+			if(v == bt[i]){
+				if(currentNumber == number[i]){
+					v.setEnabled(false);
+					currentNumber++;
+				}
+			}
+		}
+    }
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.button_game, menu);
+		return true;
+	}
+	
+	//値をシャッフルする
+	public static void shuffle(int[] arr){
+        for(int i=arr.length-1; i>0; i--){
+            int t = (int)(Math.random() * i);  //0～i-1の中から適当に選ぶ
+
+            //選ばれた値と交換する
+            int tmp = arr[i];
+            arr[i]  = arr[t];
+            arr[t]  = tmp;
+        }
+    }
+
+}

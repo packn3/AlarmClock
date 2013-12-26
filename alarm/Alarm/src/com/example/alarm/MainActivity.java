@@ -21,6 +21,7 @@ import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import java.util.Random;
 
 public class MainActivity extends Activity implements SharedPreferences.OnSharedPreferenceChangeListener {
 	
@@ -181,8 +182,14 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
    
     private PendingIntent getPendingIntent() {
     	//遷移するActivityの設定
-		//Intent intent = new Intent(this, Alarm.class );
-    	Intent intent = new Intent(this, ButtonGame.class);
+    	Random ran = new Random();
+		int n = ran.nextInt(2);
+		Intent intent;
+		switch(n){
+			case 0: intent = new Intent(this, CalculateGame.class);		break;
+			case 1: intent = new Intent(this, ButtonGame.class);		break;
+			default: intent = new Intent(this, CalculateGame.class);	break;
+		}
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
 		return pendingIntent;
     }

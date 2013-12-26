@@ -35,6 +35,10 @@
             android:name="com.example.alarm.ButtonGame"
             android:label="@string/title_activity_button_game" >
         </activity>
+        <activity
+            android:name="com.example.alarm.CalculateGame"
+            android:label="@string/title_activity_calculate_game" >
+        </activity>
     </application>
 
 </manifest>

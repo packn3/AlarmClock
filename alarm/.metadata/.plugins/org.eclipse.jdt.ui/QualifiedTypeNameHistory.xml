@@ -4,4 +4,5 @@
 <fullyQualifiedTypeName name="android.widget.EditText"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="com.example.alarm.R.id"/>
+<fullyQualifiedTypeName name="android.widget.Button"/>
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Alarm</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_alarm">Alarm</string>
+    <string name="title_activity_button">Button</string>
+    <string name="title_activity_button_game">ButtonGame</string>
+
+</resources>
