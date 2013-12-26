@@ -96,8 +96,7 @@ public class ButtonGame extends Activity implements OnClickListener{
 			if(v == bt[i]){
 				//正しい番号のボタンが押されたかを調べる
 				if(currentNumber == number[i]){
-					v.setVisibility(View.INVISIBLE); //ボタンを消す
-	                v.destroyDrawingCache(); //キャッシュ？から消す
+					v.setEnabled(false); //ボタンを無効にする
 					currentNumber++; //番号を進める
 				} else{ //間違った番号のボタンを押したらバイブを鳴らして知らせる
 					wrong();
