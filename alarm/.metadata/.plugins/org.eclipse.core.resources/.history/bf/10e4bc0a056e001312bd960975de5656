@@ -181,8 +181,7 @@ public class MainActivity extends Activity implements SharedPreferences.OnShared
    
     private PendingIntent getPendingIntent() {
     	//遷移するActivityの設定
-		//Intent intent = new Intent(this, Alarm.class );
-    	Intent intent = new Intent(this, ButtonGame.class);
+		Intent intent = new Intent(this, Alarm.class );
 		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT );
 		return pendingIntent;
     }

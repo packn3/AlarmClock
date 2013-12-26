@@ -6,6 +6,5 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_alarm">Alarm</string>
     <string name="title_activity_button">Button</string>
-    <string name="title_activity_button_game">ButtonGame</string>
 
 </resources>
